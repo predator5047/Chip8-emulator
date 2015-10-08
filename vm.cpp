@@ -1,19 +1,24 @@
 #include "vm.h"
+#include <fstream>
+#include <cstdlib>
 
 Vm::Vm() : pc(0x200) {
 
 }
 
-void Vm::run(std::string file_name) {
-	file_name = "@";
+void Vm::load(std::string file_name) {
+	std::ifstream fin(file_name);
+	fin.read(reinterpret_cast<char*>(memory + 0x200), 4096 - 0x200);
 }
 
 void Vm::cycle() {
-	uint16_t opcode = memory[pc] << 8 | memory[pc + 1];
+	const uint16_t opcode = memory[pc] << 8 | memory[pc + 1];
 	uint8_t &vx = reg[opcode & 0x0F00 >> 8];
 	uint8_t &vy = reg[opcode & 0x000F];
 	uint8_t &vf = reg[0xF];
+	uint8_t &v0 = reg[0];
 	const uint8_t val = opcode & 0x00FF;
+	const uint8_t addr = opcode & 0x0FFF;
 
 	switch (opcode & 0xF000 >> 12) {
 		case 0:
@@ -29,7 +34,7 @@ void Vm::cycle() {
 			}
 			break;
 		case 1: //jump to address 1xxx
-			pc = opcode & 0x0FFF;
+			pc = addr;
 			break;
 		case 2: //call func at address 2xxx
 			sp++;
@@ -110,7 +115,20 @@ void Vm::cycle() {
 			pc += 2;
 			break;
 		case 9:
-
+			if (vx != vy)
+				pc += 4;
+			else
+				pc += 2;
+			break;
+		case 0xA:
+			I = addr;
+			pc += 2;
+			break;
+		case 0xB:
+			pc = v0 + addr;
+			break;
+		case 0xC:
+			vx = (rand() & 0xFF) & val;
 			break;
 	}
 }
