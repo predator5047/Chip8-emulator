@@ -1,9 +1,10 @@
 CXX := g++
-CXXFLAGS := -Wall -Werror -Wextra -g -std=c++11
+CXXFLAGS := -Wall -Werror -Wextra -g -std=c++11 -MP -MMD
 TARGET := chip8vm
 
-SRCS := main.cpp
+SRCS := main.cpp vm.cpp
 OBJS := $(SRCS:%.cpp=%.o)
+DEPS := $(SRCS:%.cpp=%.d)
 
 .PHONY: all clean
 
@@ -13,4 +14,6 @@ $(TARGET): $(OBJS)
 	$(CXX) -o $@ $(OBJS)
 
 clean:
-	$(RM) $(OBJS) $(TARGET)
+	$(RM) $(OBJS) $(TARGET) $(DEPS)
+
+-include $(DEPS)
