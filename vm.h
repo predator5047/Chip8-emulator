@@ -1,8 +1,8 @@
 #ifndef VM_H_
 #define VM_H_
 
-#include <cstdint>
 #include <string>
+#include <random>
 
 class Vm {
 private:
@@ -12,6 +12,8 @@ private:
 	uint16_t I; // register used for memory operations
 	uint16_t pc; // program counter
 	uint16_t sp; // stack pointer
+	std::mt19937 gen;
+	std::uniform_int_distribution<> dist;
 public:
 	Vm();
 	void cycle();

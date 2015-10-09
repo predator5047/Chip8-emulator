@@ -1,8 +1,7 @@
 #include "vm.h"
 #include <fstream>
-#include <cstdlib>
 
-Vm::Vm() : pc(0x200) {
+Vm::Vm() : pc(0x200), gen(std::random_device()()), dist(0, 0xFF) {
 
 }
 
@@ -128,7 +127,7 @@ void Vm::cycle() {
 			pc = v0 + addr;
 			break;
 		case 0xC:
-			vx = (rand() & 0xFF) & val;
+			vx = dist(gen) & val;
 			break;
 	}
 }
