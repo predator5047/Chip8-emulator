@@ -6,9 +6,14 @@
 
 class Vm {
 private:
-	uint8_t memory[4096];
-	uint8_t reg[16];
-	uint16_t stack[16];
+	const static int MEMORY_SIZE = 4096;
+	const static int NUMBER_OF_REGISTER = 16;
+	const static int STACK_LEVELS = 16;
+	const static int START_ADDRES = 0x200;
+
+	uint8_t memory[MEMORY_SIZE];
+	uint8_t reg[NUMBER_OF_REGISTER];
+	uint16_t stack[STACK_LEVELS];
 	uint16_t I; // register used for memory operations
 	uint16_t pc; // program counter
 	uint16_t sp; // stack pointer

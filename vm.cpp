@@ -1,13 +1,14 @@
 #include "vm.h"
 #include <fstream>
 
-Vm::Vm() : pc(0x200), gen(std::random_device()()), dist(0, 0xFF) {
+Vm::Vm() : pc(START_ADDRES), gen(std::random_device()()), dist(0, 0xFF) {
 
 }
 
 void Vm::load(std::string file_name) {
 	std::ifstream fin(file_name);
-	fin.read(reinterpret_cast<char*>(memory + 0x200), 4096 - 0x200);
+	fin.read(reinterpret_cast<char*>(memory + START_ADDRES)
+			,MEMORY_SIZE - START_ADDRES);
 }
 
 void Vm::cycle() {
