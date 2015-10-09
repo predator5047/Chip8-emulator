@@ -12,15 +12,15 @@ void Vm::load(std::string file_name) {
 }
 
 void Vm::cycle() {
-	const uint16_t opcode = memory[pc] << 8 | memory[pc + 1];
-	uint8_t &vx = reg[opcode & 0x0F00 >> 8];
+	const uint16_t opcode = (memory[pc] << 8) | memory[pc + 1];
+	uint8_t &vx = reg[(opcode & 0x0F00) >> 8];
 	uint8_t &vy = reg[opcode & 0x000F];
 	uint8_t &vf = reg[0xF];
 	uint8_t &v0 = reg[0];
 	const uint8_t val = opcode & 0x00FF;
 	const uint8_t addr = opcode & 0x0FFF;
 
-	switch (opcode & 0xF000 >> 12) {
+	switch ((opcode & 0xF000) >> 12) {
 		case 0:
 			switch (opcode) {
 				case 0x00E0:
