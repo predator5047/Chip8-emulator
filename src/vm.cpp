@@ -214,7 +214,7 @@ void Vm::cycle() {
 					I += vx;
 					break;
 				case 0x29:
-					I = vx;
+					I = vx * 5;
 					break;
 				case 0x33:
 					memory[I] = vx / 100;
