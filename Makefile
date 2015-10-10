@@ -1,5 +1,6 @@
 CXX := g++
-CXXFLAGS := -Wall -Werror -Wextra -g -std=c++11 -MP -MMD
+CXXFLAGS := -Wall -Werror -Wextra -g -std=c++11 -MP -MMD \
+	-I include/
 TARGET := chip8vm
 
 SRCS := src/main.cpp src/vm.cpp
