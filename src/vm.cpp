@@ -27,6 +27,11 @@ std::uniform_int_distribution<> Vm::dist(0, 255);
 
 Vm::Vm() : pc(START_ADDRES), sp(0) {
 	std::copy(std::begin(fonts), std::end(fonts), memory);
+	std::fill_n(screen, WIDTH * HEIGHT, 0);
+}
+
+const uint8_t* Vm::getScreen() {
+	return screen;
 }
 
 void Vm::load(std::string file_name) {

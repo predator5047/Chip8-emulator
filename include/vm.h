@@ -10,6 +10,7 @@ public:
 	Vm();
 	void cycle();
 	void load(std::string file_name);
+	const uint8_t* getScreen();
 
 private:
 	const static int MEMORY_SIZE = 4096;
