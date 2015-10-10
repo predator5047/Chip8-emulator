@@ -91,7 +91,6 @@ void Vm::cycle() {
 			switch (opcode & 0x000F) {
 				case 0: //set reg0 to reg1
 					vx = vy;
-					pc += 2;
 					break;
 				case 1: //reg0 = reg0 | reg1
 					vx |= vy;
