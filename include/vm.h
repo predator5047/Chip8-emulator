@@ -5,12 +5,17 @@
 #include <random>
 
 class Vm {
+public:
+	const static int WIDTH = 64, HEIGHT = 32;
+	Vm();
+	void cycle();
+	void load(std::string file_name);
+
 private:
 	const static int MEMORY_SIZE = 4096;
 	const static int NUMBER_OF_REGISTER = 16;
 	const static int STACK_LEVELS = 16;
 	const static int START_ADDRES = 0x200;
-	const static int WIDTH = 64, HEIGHT = 32;
 	static std::mt19937 gen;
 	static std::uniform_int_distribution<> dist;
 
@@ -21,10 +26,6 @@ private:
 	uint16_t I; // register used for memory operations
 	uint16_t pc; // program counter
 	uint16_t sp; // stack pointer
-public:
-	Vm();
-	void cycle();
-	void load(std::string file_name);
 };
 
 #endif
