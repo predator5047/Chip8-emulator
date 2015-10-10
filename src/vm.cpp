@@ -52,8 +52,8 @@ void Vm::cycle() {
 					pc += 2;
 					break;
 				case 0x00EE:
-					pc = stack[sp];
 					sp--;
+					pc = stack[sp];
 					break;
 			}
 			break;
