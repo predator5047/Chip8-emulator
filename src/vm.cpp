@@ -24,7 +24,7 @@ const uint8_t fonts[80] = {
 std::mt19937 Vm::gen{std::random_device()()};
 std::uniform_int_distribution<> Vm::dist(0, 255);
 
-Vm::Vm() : pc(START_ADDRES) {
+Vm::Vm() : pc(START_ADDRES), sp(0) {
 	std::copy(fonts, fonts + 80, memory);
 }
 
@@ -60,9 +60,9 @@ void Vm::cycle() {
 			pc = addr;
 			break;
 		case 2: //call func at address 2xxx
-			sp++;
 			stack[sp] = pc;
-			pc = opcode & 0x0FFF;
+			sp++;
+			pc = addr;
 			break;
 		case 3: //skip next instruction if reg is eq to val
 			if (vx == val)
