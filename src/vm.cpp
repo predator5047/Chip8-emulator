@@ -41,7 +41,7 @@ void Vm::cycle() {
 	uint8_t &vf = reg[0xF];
 	uint8_t &v0 = reg[0];
 	const uint8_t val = opcode & 0x00FF;
-	const uint8_t addr = opcode & 0x0FFF;
+	const uint16_t addr = opcode & 0x0FFF;
 
 	switch ((opcode & 0xF000) >> 12) {
 		case 0:
