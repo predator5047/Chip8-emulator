@@ -240,4 +240,8 @@ void Vm::cycle() {
 			pc += 2;
 			break;
 	}
+	if (dt > 0)
+		dt--;
+	if (st > 0)
+		st--;
 }
