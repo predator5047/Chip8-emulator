@@ -44,7 +44,7 @@ void Vm::cycle() {
 		case 0:
 			switch (opcode) {
 				case 0x00E0:
-					//to do clear screen
+					std::fill_n(screen, WIDTH * HEIGHT, 0);
 					pc += 2;
 					break;
 				case 0x00EE:
@@ -149,6 +149,23 @@ void Vm::cycle() {
 			break;
 		case 0xC:
 			vx = dist(gen) & val;
+			pc += 2;
+			break;
+		case 0xD:
+			const int n = opcode & 0x000F;
+			for (int i = 0; i < n; i++) {
+				uint8_t pixel = memory[I + i];
+				for (int x = 0; x < 8; x++) {
+					const int index = vx + x + (vy + i) * WIDTH;
+					if (pixel & (0x80 >> x)) {
+						if (screen[index]) {
+							vf = 1;
+						}
+						screen[index] ^= 1;
+					}
+				}
+			}
+			pc += 2;
 			break;
 	}
 }
