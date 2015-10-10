@@ -26,6 +26,8 @@ private:
 	uint16_t I; // register used for memory operations
 	uint16_t pc; // program counter
 	uint16_t sp; // stack pointer
+	bool keyboard[0xF];
+	int dt, st;
 };
 
 #endif

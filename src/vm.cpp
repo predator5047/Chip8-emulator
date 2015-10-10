@@ -1,6 +1,7 @@
 #include "vm.h"
 #include <fstream>
 #include <algorithm>
+#include <iterator>
 
 const uint8_t fonts[80] = {
 	0xF0, 0x90, 0x90, 0x90, 0xF0, //0
@@ -25,7 +26,7 @@ std::mt19937 Vm::gen{std::random_device()()};
 std::uniform_int_distribution<> Vm::dist(0, 255);
 
 Vm::Vm() : pc(START_ADDRES), sp(0) {
-	std::copy(fonts, fonts + 80, memory);
+	std::copy(std::begin(fonts), std::end(fonts), memory);
 }
 
 void Vm::load(std::string file_name) {
@@ -130,7 +131,7 @@ void Vm::cycle() {
 					vy -= vx;
 					break;
 				case 0xE:
-					vf = vx & 0x80 >> 7;
+					vf = (vx & 0x80) >> 7;
 					vx <<= 1;
 					break;
 			}
@@ -153,7 +154,7 @@ void Vm::cycle() {
 			vx = dist(gen) & val;
 			pc += 2;
 			break;
-		case 0xD:
+		case 0xD: {
 			const int n = opcode & 0x000F;
 			for (int i = 0; i < n; i++) {
 				uint8_t pixel = memory[I + i];
@@ -165,6 +166,70 @@ void Vm::cycle() {
 						}
 						screen[index] ^= 1;
 					}
+				}
+			}
+			pc += 2;
+		}
+			break;
+		case 0xE:
+			switch (opcode & 0x00FF) {
+				case 0x9E:
+					if (keyboard[vx]) {
+						pc += 4;
+					} else {
+						pc += 2;
+					}
+					break;
+				case 0xA1:
+					if (!keyboard[vx]) {
+						pc += 4;
+					} else {
+						pc += 2;
+					}
+					break;
+			}
+			break;
+		case 0xF:
+			switch (opcode & 0x00FF) {
+				case 0x07:
+					vx = dt;
+					break;
+				case 0x0A: {
+					auto *i = std::find(std::begin(keyboard)
+						,std::end(keyboard), true);
+					if (i != std::end(keyboard)) {
+						vx = i - keyboard;
+					} else {
+						return;
+					}
+					break;
+				}
+				case 0x15:
+					dt = vx;
+					break;
+				case 0x18:
+					st = vx;
+					break;
+				case 0x1E:
+					I += vx;
+					break;
+				case 0x29:
+					I = vx;
+					break;
+				case 0x33:
+					memory[I] = vx / 100;
+					memory[I + 1] = (vx / 10) % 10;
+					memory[I + 2] = vx % 10;
+					break;
+				case 0x55: {
+					const int n = (opcode & 0x0F00) >> 8;
+					std::copy(reg, reg + n, memory + I);
+					break;
+				}
+				case 0x65: {
+					const int n = (opcode & 0x0F00) >> 8;
+					std::copy(memory + I , memory + I + n, reg);
+					break;
 				}
 			}
 			pc += 2;
