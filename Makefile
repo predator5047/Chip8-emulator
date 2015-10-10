@@ -2,7 +2,7 @@ CXX := g++
 CXXFLAGS := -Wall -Werror -Wextra -g -std=c++11 -MP -MMD
 TARGET := chip8vm
 
-SRCS := main.cpp vm.cpp
+SRCS := src/main.cpp src/vm.cpp
 OBJS := $(SRCS:%.cpp=%.o)
 DEPS := $(SRCS:%.cpp=%.d)
 
