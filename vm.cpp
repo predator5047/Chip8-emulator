@@ -21,7 +21,10 @@ const uint8_t fonts[80] = {
 	0xF0, 0x80, 0xF0, 0x80, 0x80  //F
 };
 
-Vm::Vm() : pc(START_ADDRES), gen(std::random_device()()), dist(0, 0xFF) {
+std::mt19937 Vm::gen{std::random_device()()};
+std::uniform_int_distribution<> Vm::dist(0, 255);
+
+Vm::Vm() : pc(START_ADDRES) {
 	std::copy(fonts, fonts + 80, memory);
 }
 
