@@ -62,6 +62,7 @@ void Vm::cycle() {
 		case 0:
 			switch (opcode) {
 				case 0x00E0:
+					drawFlag = true;
 					std::fill_n(screen, WIDTH * HEIGHT, 0);
 					pc += 2;
 					break;
@@ -170,6 +171,8 @@ void Vm::cycle() {
 			break;
 		case 0xD: {
 			const int n = opcode & 0x000F;
+			drawFlag = true;
+			vf = 0;
 			for (int i = 0; i < n; i++) {
 				uint8_t pixel = memory[I + i];
 				for (int x = 0; x < 8; x++) {
