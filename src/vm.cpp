@@ -229,6 +229,10 @@ void Vm::cycle() {
 					st = vx;
 					break;
 				case 0x1E:
+					vf = 0;
+					if ((int)I + vx > 0xFFF) {
+						vf = 1;
+					}
 					I += vx;
 					break;
 				case 0x29:
