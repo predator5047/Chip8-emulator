@@ -26,7 +26,9 @@ const uint8_t fonts[80] = {
 std::mt19937 Vm::gen{std::random_device()()};
 std::uniform_int_distribution<> Vm::dist(0, 255);
 
-Vm::Vm() : pc(START_ADDRES), sp(0) {
+Vm::Vm() : drawFlag(true), I(0), pc(START_ADDRES), sp(0), dt(0), st(0) {
+	std::fill(std::begin(memory), std::end(memory), 0);
+	std::fill(std::begin(stack), std::end(stack), 0);
 	std::copy(std::begin(fonts), std::end(fonts), memory);
 	std::fill_n(screen, WIDTH * HEIGHT, 0);
 }
