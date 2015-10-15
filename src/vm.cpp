@@ -34,6 +34,10 @@ const uint8_t* Vm::getScreen() {
 	return screen;
 }
 
+bool* Vm::getKeyboard() {
+	return keyboard;
+}
+
 void Vm::load(std::string file_name) {
 	std::ifstream fin(file_name);
 	fin.read(reinterpret_cast<char*>(memory + START_ADDRES)

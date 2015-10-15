@@ -11,6 +11,8 @@ public:
 	void cycle();
 	void load(std::string file_name);
 	const uint8_t* getScreen();
+	bool* getKeyboard();
+	bool drawFlag;
 
 private:
 	const static int MEMORY_SIZE = 4096;
@@ -27,7 +29,7 @@ private:
 	uint16_t I; // register used for memory operations
 	uint16_t pc; // program counter
 	uint16_t sp; // stack pointer
-	bool keyboard[0xF];
+	bool keyboard[0x11];
 	int dt, st;
 };
 
