@@ -1,7 +1,8 @@
-#include "vm.h"
 #include <fstream>
 #include <algorithm>
 #include <iterator>
+#include <iostream>
+#include "vm.h"
 
 const uint8_t fonts[80] = {
 	0xF0, 0x90, 0x90, 0x90, 0xF0, //0
@@ -52,6 +53,8 @@ void Vm::cycle() {
 	uint8_t &v0 = reg[0];
 	const uint8_t val = opcode & 0x00FF;
 	const uint16_t addr = opcode & 0x0FFF;
+	std::cout << std::hex << "Executing " << std::uppercase << opcode
+	<< " at 0" << pc << " , I:" << I << " SP:0" << sp << "\n";
 
 	switch ((opcode & 0xF000) >> 12) {
 		case 0:
