@@ -1,6 +1,8 @@
 CXX := g++
 CXXFLAGS := -Wall -Werror -Wextra -g -std=c++11 -MP -MMD \
 	-I include/
+LDLIBS := -lSDL2
+
 TARGET := chip8vm
 
 SRCS := src/main.cpp src/vm.cpp
@@ -12,7 +14,7 @@ DEPS := $(SRCS:%.cpp=%.d)
 all: $(TARGET)
 
 $(TARGET): $(OBJS)
-	$(CXX) -o $@ $(OBJS)
+	$(CXX) -o $@ $(LDLIBS) $(OBJS)
 
 clean:
 	$(RM) $(OBJS) $(TARGET) $(DEPS)
