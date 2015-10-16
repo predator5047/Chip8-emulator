@@ -9,7 +9,7 @@ public:
 	const static int WIDTH = 64, HEIGHT = 32;
 	Vm();
 	void cycle();
-	void load(std::string file_name);
+	bool load(std::string file_name);
 	const uint8_t* getScreen();
 	bool* getKeyboard();
 	bool drawFlag;

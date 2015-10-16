@@ -68,9 +68,14 @@ void draw() {
 	SDL_UpdateWindowSurface(win.get());
 }
 
-int main() {
-	vm.load("roms/CONNECT4");
+int main(int argc, char **argv) {
 	const Uint8 *keys;
+	cout << argc << "\n";
+
+	if (argc < 1 || vm.load(argv[1])) {
+		cout << "Error reading rom\n";
+		return 1;
+	}
 
 	if (SDL_Init(SDL_INIT_EVERYTHING)) {
 		cout << "SDL init error\n";

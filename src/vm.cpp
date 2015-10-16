@@ -3,7 +3,6 @@
 #include <iterator>
 #include <iostream>
 #include "vm.h"
-
 const uint8_t fonts[80] = {
 	0xF0, 0x90, 0x90, 0x90, 0xF0, //0
 	0x20, 0x60, 0x20, 0x20, 0x70, //1
@@ -41,10 +40,14 @@ bool* Vm::getKeyboard() {
 	return keyboard;
 }
 
-void Vm::load(std::string file_name) {
+bool Vm::load(std::string file_name) {
 	std::ifstream fin(file_name);
+	if (!fin.good()) {
+		return true;
+	}
 	fin.read(reinterpret_cast<char*>(memory + START_ADDRES)
 			,MEMORY_SIZE - START_ADDRES);
+	return false;
 }
 
 void Vm::cycle() {
