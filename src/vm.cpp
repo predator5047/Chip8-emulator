@@ -133,7 +133,7 @@ void Vm::cycle() {
 						vf = 1;
 					else
 						vf = 0;
-					vx += vy;
+					vx -= vy;
 					break;
 				case 6:
 					vf = vx & 0x01;
