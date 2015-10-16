@@ -250,7 +250,8 @@ void Vm::cycle() {
 				}
 				case 0x65: {
 					const int n = (opcode & 0x0F00) >> 8;
-					std::copy(memory + I , memory + I + n, reg);
+					std::copy(memory + I , memory + I + n + 1
+							, reg);
 					break;
 				}
 			}
